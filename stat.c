@@ -4,18 +4,16 @@
 #include <stdio.h>
 #include <time.h>
 
-char* sizechange(int size){
-  char *ret = malloc(100); 
- if (size>1000){
-   sprintf(ret, "%d KB\n", size/1000.0);
+void sizechange(long size){
+  if (size>1000){
+    printf(" %.2f KB\n", size/1000.0);
   }else if(size>1000000){
-   sprintf(ret, "%d MB\n", size/1000000.0);
+    printf(" %.2f MB\n", size/1000000.0);
   }else if(size>1000000000){
-   sprintf(ret, "%d GB\n", size/1000000000.0);
+    printf(" %.2f GB\n", size/1000000000.0);
   }else{
-   sprintf(ret, "%d B\n", size);
+    printf(" %.2f B\n", size);
   }
- return ret;
 }
 
 char* readperm(int permissions){
@@ -65,6 +63,7 @@ char* readperm(int permissions){
 int main(){
   struct stat n;
   stat("stat.c", &n);
-  printf(" size - %d\n mode - %o\n time - %s\n new permissions %s\n new size %s\n",n.st_size, n.st_mode, asctime(gmtime(&(n.st_atime))), readperm(n.st_mode),sizechange(n.st_size));
+  printf(" size - %d\n mode - %o\n time - %s\n new permissions %s\n",n.st_size, n.st_mode, asctime(gmtime(&(n.st_atime))), readperm(n.st_mode));
+  sizechange(n.st_size);
   return 0;
 }
